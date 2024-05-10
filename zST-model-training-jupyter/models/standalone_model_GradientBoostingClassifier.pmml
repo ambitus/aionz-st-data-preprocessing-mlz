@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="SkLearn2PMML package" version="0.107.0"/>
+		<Timestamp>2024-04-30T20:51:01Z</Timestamp>
+	</Header>
+	<MiningBuildTask>
+		<Extension name="repr">PMMLPipeline(steps=[('model', GradientBoostingClassifier(learning_rate=0.9, n_estimators=2, random_state=33))])</Extension>
+	</MiningBuildTask>
+	<DataDictionary>
+		<DataField name="y" optype="categorical" dataType="integer">
+			<Value value="0"/>
+			<Value value="1"/>
+		</DataField>
+		<DataField name="x3" optype="continuous" dataType="float"/>
+		<DataField name="x6" optype="continuous" dataType="float"/>
+		<DataField name="x7" optype="continuous" dataType="float"/>
+		<DataField name="x9" optype="continuous" dataType="float"/>
+		<DataField name="x10" optype="continuous" dataType="float"/>
+	</DataDictionary>
+	<MiningModel functionName="classification" algorithmName="sklearn.ensemble._gb.GradientBoostingClassifier">
+		<MiningSchema>
+			<MiningField name="y" usageType="target"/>
+			<MiningField name="x3"/>
+			<MiningField name="x6"/>
+			<MiningField name="x7"/>
+			<MiningField name="x9"/>
+			<MiningField name="x10"/>
+		</MiningSchema>
+		<Segmentation multipleModelMethod="modelChain" missingPredictionTreatment="returnMissing">
+			<Segment id="1">
+				<True/>
+				<MiningModel functionName="regression">
+					<MiningSchema>
+						<MiningField name="x6"/>
+						<MiningField name="x7"/>
+						<MiningField name="x10"/>
+						<MiningField name="x3"/>
+						<MiningField name="x9"/>
+					</MiningSchema>
+					<Output>
+						<OutputField name="decisionFunction(1)" optype="continuous" dataType="double" isFinalResult="false"/>
+						<OutputField name="sigmoid(decisionFunction(1))" optype="continuous" dataType="double" feature="transformedValue" isFinalResult="false">
+							<Apply function="/">
+								<Constant dataType="double">1.0</Constant>
+								<Apply function="+">
+									<Constant dataType="double">1.0</Constant>
+									<Apply function="exp">
+										<Apply function="*">
+											<Constant dataType="double">-1.0</Constant>
+											<FieldRef field="decisionFunction(1)"/>
+										</Apply>
+									</Apply>
+								</Apply>
+							</Apply>
+						</OutputField>
+					</Output>
+					<Targets>
+						<Target rescaleConstant="-6.728886704243931" rescaleFactor="0.9"/>
+					</Targets>
+					<LocalTransformations>
+						<DerivedField name="double(x7)" optype="continuous" dataType="double">
+							<FieldRef field="x7"/>
+						</DerivedField>
+						<DerivedField name="double(x10)" optype="continuous" dataType="double">
+							<FieldRef field="x10"/>
+						</DerivedField>
+						<DerivedField name="double(x3)" optype="continuous" dataType="double">
+							<FieldRef field="x3"/>
+						</DerivedField>
+						<DerivedField name="double(x9)" optype="continuous" dataType="double">
+							<FieldRef field="x9"/>
+						</DerivedField>
+					</LocalTransformations>
+					<Segmentation multipleModelMethod="sum" missingPredictionTreatment="returnMissing">
+						<Segment id="1">
+							<True/>
+							<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+								<MiningSchema>
+									<MiningField name="x6"/>
+									<MiningField name="double(x7)"/>
+									<MiningField name="double(x10)"/>
+									<MiningField name="double(x3)"/>
+									<MiningField name="double(x9)"/>
+								</MiningSchema>
+								<LocalTransformations>
+									<DerivedField name="double(x6)" optype="continuous" dataType="double">
+										<FieldRef field="x6"/>
+									</DerivedField>
+								</LocalTransformations>
+								<Node score="837.2157920549605">
+									<True/>
+									<Node score="16.255142799504846">
+										<SimplePredicate field="double(x7)" operator="lessOrEqual" value="-1.3834890723228455"/>
+										<Node score="130.65592265766327">
+											<SimplePredicate field="double(x10)" operator="lessOrEqual" value="0.5"/>
+											<Node score="4.951521316502055">
+												<SimplePredicate field="double(x3)" operator="lessOrEqual" value="1.0855962336063385"/>
+											</Node>
+										</Node>
+										<Node score="2.29876807042651">
+											<SimplePredicate field="double(x9)" operator="lessOrEqual" value="0.3565984070301056"/>
+										</Node>
+									</Node>
+									<Node score="-0.2608431710912854">
+										<SimplePredicate field="double(x9)" operator="lessOrEqual" value="26.9046688079834"/>
+										<Node score="-0.8760528744809261">
+											<SimplePredicate field="double(x9)" operator="lessOrEqual" value="0.7510610222816467"/>
+										</Node>
+									</Node>
+									<Node score="-1.001195863567157">
+										<SimplePredicate field="double(x6)" operator="lessOrEqual" value="1.1228205263614655"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+						<Segment id="2">
+							<True/>
+							<TreeModel functionName="regression" missingValueStrategy="nullPrediction" noTrueChildStrategy="returnLastPrediction">
+								<MiningSchema>
+									<MiningField name="double(x7)"/>
+									<MiningField name="double(x10)"/>
+									<MiningField name="double(x3)"/>
+									<MiningField name="double(x9)"/>
+								</MiningSchema>
+								<Node score="-0.9903054534813975">
+									<True/>
+									<Node score="-2644.672726571407">
+										<SimplePredicate field="double(x7)" operator="lessOrEqual" value="-1.3834890723228455"/>
+										<Node score="-0.5856802496516921">
+											<SimplePredicate field="double(x9)" operator="lessOrEqual" value="0.3565984070301056"/>
+											<Node score="-9.61561277527588">
+												<SimplePredicate field="double(x10)" operator="lessOrEqual" value="0.5"/>
+											</Node>
+										</Node>
+										<Node score="-8.959897264003382">
+											<SimplePredicate field="double(x10)" operator="lessOrEqual" value="0.5"/>
+										</Node>
+									</Node>
+									<Node score="2.552529380328147">
+										<SimplePredicate field="double(x3)" operator="lessOrEqual" value="-0.6769278347492218"/>
+										<Node score="-0.2546952357747353">
+											<SimplePredicate field="double(x9)" operator="lessOrEqual" value="1.7044986486434937"/>
+										</Node>
+									</Node>
+									<Node score="-0.7089374175612554">
+										<SimplePredicate field="double(x3)" operator="lessOrEqual" value="0.8897602260112762"/>
+									</Node>
+								</Node>
+							</TreeModel>
+						</Segment>
+					</Segmentation>
+				</MiningModel>
+			</Segment>
+			<Segment id="2">
+				<True/>
+				<RegressionModel functionName="classification">
+					<MiningSchema>
+						<MiningField name="y" usageType="target"/>
+						<MiningField name="sigmoid(decisionFunction(1))"/>
+					</MiningSchema>
+					<Output>
+						<OutputField name="probability(0)" optype="continuous" dataType="double" feature="probability" value="0"/>
+						<OutputField name="probability(1)" optype="continuous" dataType="double" feature="probability" value="1"/>
+					</Output>
+					<RegressionTable intercept="0.0" targetCategory="1">
+						<NumericPredictor name="sigmoid(decisionFunction(1))" coefficient="1.0"/>
+					</RegressionTable>
+					<RegressionTable intercept="0.0" targetCategory="0"/>
+				</RegressionModel>
+			</Segment>
+		</Segmentation>
+	</MiningModel>
+</PMML>

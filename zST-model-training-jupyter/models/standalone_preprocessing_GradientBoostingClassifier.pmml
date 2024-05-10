@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="SkLearn2PMML package" version="0.107.0"/>
+		<Timestamp>2024-04-30T20:51:03Z</Timestamp>
+	</Header>
+	<MiningBuildTask>
+		<Extension name="repr">PMMLPipeline(steps=[('model', ColumnTransformer(transformers=[('num',
+                                 Pipeline(steps=[('normalizer',
+                                                  StandardScaler())]),
+                                 ['User', 'Card', 'Year', 'Month', 'Day',
+                                  'Merchant Name', 'Zip', 'Time', 'Amount']),
+                                ('cat',
+                                 Pipeline(steps=[('encoder',
+                                                  OrdinalEncoder())]),
+                                 ['Use Chip'])]))])</Extension>
+	</MiningBuildTask>
+	<DataDictionary>
+		<DataField name="User" optype="continuous" dataType="double"/>
+		<DataField name="Card" optype="continuous" dataType="double"/>
+		<DataField name="Year" optype="continuous" dataType="double"/>
+		<DataField name="Month" optype="continuous" dataType="double"/>
+		<DataField name="Day" optype="continuous" dataType="double"/>
+		<DataField name="Time" optype="continuous" dataType="double"/>
+		<DataField name="Amount" optype="continuous" dataType="double"/>
+		<DataField name="Use Chip" optype="categorical" dataType="string">
+			<Value value="Chip Transaction"/>
+			<Value value="Online Transaction"/>
+			<Value value="Swipe Transaction"/>
+		</DataField>
+		<DataField name="Merchant Name" optype="continuous" dataType="double"/>
+		<DataField name="Zip" optype="continuous" dataType="double"/>
+	</DataDictionary>
+	<TransformationDictionary>
+		<DerivedField name="standardScaler(User)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="User"/>
+					<Constant dataType="double">1000.7950251979546</Constant>
+				</Apply>
+				<Constant dataType="double">569.5119230765802</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Card)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Card"/>
+					<Constant dataType="double">1.350807195666526</Constant>
+				</Apply>
+				<Constant dataType="double">1.40649873810832</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Year)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Year"/>
+					<Constant dataType="double">2011.956605507758</Constant>
+				</Apply>
+				<Constant dataType="double">5.106313174717207</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Month)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Month"/>
+					<Constant dataType="double">6.523955191399598</Constant>
+				</Apply>
+				<Constant dataType="double">3.4727139737034585</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Day)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Day"/>
+					<Constant dataType="double">15.719209903677795</Constant>
+				</Apply>
+				<Constant dataType="double">8.792723979355507</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Merchant Name)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Merchant Name"/>
+					<Constant dataType="double">-4.7776660168809632E17</Constant>
+				</Apply>
+				<Constant dataType="double">4.7603884867065989E18</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Zip)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Zip"/>
+					<Constant dataType="double">44967.024736348496</Constant>
+				</Apply>
+				<Constant dataType="double">32140.857179125247</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Time)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Time"/>
+					<Constant dataType="double">1270.9232755525068</Constant>
+				</Apply>
+				<Constant dataType="double">506.1209568682172</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="standardScaler(Amount)" optype="continuous" dataType="double">
+			<Apply function="/">
+				<Apply function="-">
+					<FieldRef field="Amount"/>
+					<Constant dataType="double">43.640659962052226</Constant>
+				</Apply>
+				<Constant dataType="double">81.75678947502135</Constant>
+			</Apply>
+		</DerivedField>
+		<DerivedField name="encoder(Use Chip)" optype="categorical" dataType="double">
+			<MapValues outputColumn="data:output">
+				<FieldColumnPair field="Use Chip" column="data:input"/>
+				<InlineTable>
+					<row>
+						<data:input>Chip Transaction</data:input>
+						<data:output>0.0</data:output>
+					</row>
+					<row>
+						<data:input>Online Transaction</data:input>
+						<data:output>1.0</data:output>
+					</row>
+					<row>
+						<data:input>Swipe Transaction</data:input>
+						<data:output>2.0</data:output>
+					</row>
+				</InlineTable>
+			</MapValues>
+		</DerivedField>
+	</TransformationDictionary>
+</PMML>
